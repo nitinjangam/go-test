@@ -1,0 +1,23 @@
+name: Dev Deplyment
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+          - main
+
+concurrency:
+  group: dev_deployment
+  cancel-in-progress: false
+
+jobs:
+    test-ms:
+      runs-on: ubuntu-latest
+      env:
+        MODE: DEV
+      steps:
+        - name: checkout
+          uses: actions/checkout@v2
+
+        - name: Run go test
+          run: go test -cover
